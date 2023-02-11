@@ -31,7 +31,7 @@ namespace Calculator
             multButton.Click += AddSymbol;
             minButton.Click += AddSymbol;
             addButton.Click += AddSymbol;
-            dotButton.Click += ParseLastIntegerInputToFloat;
+            comaButton.Click += AddComa;
             zeroButton.Click += AddNumber;
             oneButton.Click += AddNumber;
             twoButton.Click += AddNumber;
@@ -80,6 +80,9 @@ namespace Calculator
             // Get symbol of the current operation in the differents cases
             if (sender == divButton || sender == multButton || sender == addButton || sender == minButton)
             {
+                // Give value 0 to the result field
+                this.result.Text = "0";
+
                 Button sendedButton = sender as Button;
                 string selection = sendedButton.Content.ToString();
 
@@ -97,8 +100,11 @@ namespace Calculator
         /// </summary>
         /// <param name="sender">Object which raise the event calling this function</param>
         /// <param name="e">Event which call this function</param>
-        private void ParseLastIntegerInputToFloat(object sender, RoutedEventArgs e)
+        private void AddComa(object sender, RoutedEventArgs e)
         {
+            // Give value 0 to the result field
+            this.result.Text = "0";
+
             // Get the operations string
             string input = this.operations.Text;
 
@@ -106,15 +112,15 @@ namespace Calculator
             string[] inputs = input.Split(new char[] { '+', '-', '/', '*' }, StringSplitOptions.None);
 
             // If the last input is not null or contain a dot
-            if (!string.IsNullOrEmpty(inputs.Last()) && !inputs.Last().Contains('.'))
+            if (!string.IsNullOrEmpty(inputs.Last()) && !inputs.Last().Contains(','))
             {
-                this.operations.Text = string.Concat(this.operations.Text, '.');
+                this.operations.Text = string.Concat(this.operations.Text, ',');
             }
 
             // If the last occurence is null
             if (string.IsNullOrEmpty(inputs.Last()))
             {
-                this.operations.Text = string.Concat(this.operations.Text, "0.");
+                this.operations.Text = string.Concat(this.operations.Text, "0,");
             }
         }
 
@@ -125,6 +131,9 @@ namespace Calculator
         /// <param name="e">Event which call this function</param>
         private void AddNumber(object sender, RoutedEventArgs e)
         {
+            // Give value 0 to the result field
+            this.result.Text = "0";
+
             // Get the number of the button in the differents cases
             if (sender == zeroButton || sender == oneButton || sender == twoButton || sender == threeButton || sender == fourButton || sender == fiveButton || sender == sixButton || sender == sevenButton || sender == eightButton || sender == neinButton)
             {
@@ -152,10 +161,15 @@ namespace Calculator
         /// <param name="e">Event which call this function</param>
         private void Calculate(object sender, RoutedEventArgs e)
         {
+            // Give value 0 to the result field
+            this.result.Text = "0";
+
+            string operations = this.operations.Text;
+
             try
             {
                 // Change all divisions by a multiplication by inverted number
-                string operations = this.operations.Text.Replace("/", "*1/");
+                operations = operations.Replace("/", "*1/");
 
                 // Change all substraction by an addition of negative number
                 operations = operations.Replace("-", "+-1*");
@@ -180,7 +194,7 @@ namespace Calculator
                                     string numberToInvert = subBlock.Replace("1/", null);
 
                                     // Handle a possible division by 0 from user
-                                    if(numberToInvert.Equals("0"))
+                                    if (numberToInvert.Equals("0"))
                                     {
                                         throw new Exception("Error : division by 0");
                                     }
@@ -217,7 +231,7 @@ namespace Calculator
                 // Give value 0 to the result field
                 this.result.Text = result.ToString();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 // Give value 0 to the operations field
                 this.operations.Text = "0";

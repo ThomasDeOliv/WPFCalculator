@@ -85,10 +85,10 @@
             Content="="
             />
         <Button
-            x:Name="dotButton"  
+            x:Name="comaButton"  
             Grid.Row="5" 
             Grid.Column="2" 
-            Content="."
+            Content=","
             />
         <Button
             x:Name="zeroButton"  
