@@ -4,33 +4,40 @@
              xmlns:local="clr-namespace:Calculator"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        
-        <!--Custom button style-->
+        <!--Static resources-->
+        <SolidColorBrush Color="#001427" x:Key="WindowDefaultBackground"/>
+        <SolidColorBrush Color="#FBFBFF" x:Key="ButtonDefaultBackground"/>
+        <SolidColorBrush Color="#0FFF95" x:Key="ButtonDefaultBackgroundIsMouseOver"/>
+        <SolidColorBrush Color="#1985A1" x:Key="ButtonDefaultBackgroundIsPressed"/>
+        <SolidColorBrush Color="#000000" x:Key="ButtonDefaultForeGround"/>
+
+        <!--Custom button implicit style-->
         <Style TargetType="Button">
+            <Setter Property="Foreground" Value="{StaticResource ButtonDefaultForeGround}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border Name="BorderButton"
                                 CornerRadius="10"
-                                Background="#FBFBFF"
                                 BorderThickness="0"
                                 Margin="10"
+                                Background="{StaticResource ButtonDefaultBackground}"
                                 Width="{TemplateBinding Width}"
                                 Height="{TemplateBinding Height}">
                             <ContentPresenter
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 TextBlock.FontSize="16"
-                                TextBlock.FontWeight="Bold"
+                                TextBlock.FontWeight="Bold"  
                                 Content="{TemplateBinding Content}"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#0FFF95" TargetName="BorderButton"/>
+                                <Setter Property="Background" Value="{StaticResource ButtonDefaultBackgroundIsMouseOver}" TargetName="BorderButton"/>
                                 <Setter Property="Cursor" Value="Hand" TargetName="BorderButton"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" Value="#1985A1" TargetName="BorderButton"/>
+                                <Setter Property="Background" Value="{StaticResource ButtonDefaultBackgroundIsPressed}" TargetName="BorderButton"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -38,28 +45,26 @@
             </Setter>
         </Style>
         
-        <!--Custom Border style for TextBlock-->
-        <Style x:Key="TextBlockCustomBorder" TargetType="Border">
+        <!--Custom Border explicit style for TextBlock-->
+        <Style TargetType="Border" x:Key="TextBlockCustomBorder">
             <Setter Property="Margin" Value="10"/>
             <Setter Property="Padding" Value="5"/>
             <Setter Property="CornerRadius" Value="10"/>
             <Setter Property="Background" Value="#FBFBFF"/>
         </Style>
         
-        <!--Custom TextBlock style for operations-->
-        <Style x:Key="TextBlockOperationsCustomStyle" TargetType="TextBlock">
+        <!--Custom TextBlock explicit style for operations-->
+        <Style TargetType="TextBlock" x:Key="TextBlockOperationsCustomStyle">
+            <Setter Property="TextWrapping" Value="NoWrap"/>
+            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="TextAlignment" Value="Right"/>
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="FontWeight" Value="DemiBold"/>
         </Style>
 
-        <!--Custom TextBlock style for result-->
-        <Style x:Key="TextBlockResultCustomStyle" TargetType="TextBlock">
-            <Setter Property="TextWrapping" Value="NoWrap"/>
-            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="TextAlignment" Value="Right"/>
+        <!--Custom TextBlock explicit style for result-->
+        <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockOperationsCustomStyle}" x:Key="TextBlockResultCustomStyle">
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="FontWeight" Value="Bold"/>
         </Style>

@@ -8,8 +8,9 @@
         Title="Calculator" 
         Height="500" 
         Width="400"
-        Background="#001427"
-        ResizeMode="NoResize" Icon="/icon.png">
+        Background="{StaticResource WindowDefaultBackground}"
+        ResizeMode="NoResize" 
+        Icon="/icon.png">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
